@@ -1,0 +1,69 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Mitr", sans-serif;
+  font-family: "Prompt", sans-serif;
+}
+
+.container {
+  display: flex;
+  padding: 50px;
+  gap: 20px;
+}
+.container section {
+  border: 2px solid #2C3333;
+  padding: 20px;
+  padding-top: 30px;
+  width: 100%;
+  position: relative;
+}
+.container section .row {
+  display: flex;
+  gap: 20px;
+}
+.container section .row .gap-5 {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+}
+.container section .title {
+  position: absolute;
+  top: 0;
+  transform: translateY(-50%);
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #2C3333;
+  padding: 0px 10px;
+  background: white;
+}
+.container section .response {
+  margin-top: 10px;
+}
+.container section input {
+  height: 35px;
+  padding: 0px 10px;
+  width: 100%;
+}
+.container section select {
+  height: 35px;
+  padding: 0px 10px;
+}
+.container section .submit {
+  height: 35px;
+  width: 100px;
+  background: #2C3333;
+  color: white;
+  border: 2px solid #2C3333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition-duration: 0.2s;
+}
+.container section .submit:hover {
+  background: white;
+  border: 2px solid #2C3333;
+  color: #2C3333;
+  transition-duration: 0.2s;
+}/*# sourceMappingURL=main.css.map */

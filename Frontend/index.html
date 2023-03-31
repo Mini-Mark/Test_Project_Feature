@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Test API</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+		<link
+			href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&family=Prompt&display=swap"
+			rel="stylesheet"
+		/>
+		<script
+			src="https://code.jquery.com/jquery-3.6.4.min.js"
+			integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+			crossorigin="anonymous"
+		></script>
+
+		<link rel="stylesheet" href="main.css" />
+	</head>
+	<body>
+		<div class="container">
+			<section>
+				<div class="title">Create API</div>
+				<div class="row">
+					<div class="gap-5">
+						<input
+							type="text"
+							placeholder="API Name"
+							id="create_api_name"
+						/>
+						<select id="create_api_type">
+							<option value="Select">Select</option>
+							<option value="Insert">Insert</option>
+							<option value="Update">Update</option>
+							<option value="Delete">Delete</option>
+						</select>
+					</div>
+					<div class="submit" onclick="createAPI()">Create</div>
+				</div>
+				<div class="response" id="create_api">Response: Wating...</div>
+			</section>
+			<section>
+				<div class="title">Test API</div>
+				<div class="row">
+					<input
+						type="text"
+						placeholder="API Name"
+						+
+						id="test_api_name"
+					/>
+					<div class="submit" onclick="runAPI()">Run</div>
+				</div>
+				<div class="response" id="test_api">Response: Wating...</div>
+			</section>
+			<section>
+				<div class="title">
+					Result (<span id="statusCode">Status</span>)
+				</div>
+				<div class="row">
+					<div class="result" id="result">Waiting.......</div>
+				</div>
+			</section>
+		</div>
+		<script>
+			var port = 3000;
+
+			$(document).ready(() => {
+				$("#test_api_name").val(`http://localhost:${port + 1}/`);
+			});
+
+			function createAPI() {
+				let api_name = $("#create_api_name").val();
+				let api_type = $("#create_api_type").val();
+
+				$.ajax({
+					type: "post",
+					url: `http://localhost:${port}/create-api/${api_name}`,
+					contentType: "application/json",
+					data: JSON.stringify({ type: api_type }),
+					success: function (res, status, code) {
+						$("div#create_api.response").html(
+							`Response: (${code.status}) ${res}`
+						);
+					},
+					error: function (request, status, error) {
+						$("div#create_api.response").html(
+							`Response: (${request.status}) ${error}`
+						);
+					},
+				});
+			}
+
+			function runAPI() {
+				let api_name = $("#test_api_name").val();
+				$.get(`${api_name}`, (res, status) => {
+					$("div#test_api.response").html(`Response: ${status}`);
+
+					$("div#result").html(res.status);
+				});
+
+				$.ajax({
+					type: "get",
+					url: `${api_name}`,
+					success: function (res, status, code) {
+						$("div#test_api.response").html(
+							`Response: (${code.status}) ${status}`
+						);
+
+						$("div#result").html(res);
+					},
+					error: function (request, status, error) {
+						$("div#test_api.response").html(
+							`Response: (${request.status}) ${error}`
+						);
+
+						$("div#result").html("Waiting.......");
+					},
+				});
+			}
+		</script>
+	</body>
+</html>
